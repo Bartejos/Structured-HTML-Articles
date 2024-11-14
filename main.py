@@ -18,7 +18,7 @@ completion = client.chat.completions.create(
             "content": [
                 {
                     "type": "text",
-                    "text": "You will be provided with an article and your task is to structurize it with HTML tags, however use them only as if they are inside the body tag. Moreover you should propose prompts for generating images and where to insert them. Write the image prompts in the alt attribute, add captions and center the images. The image captions should match the article's language."
+                    "text": "You will be provided with an article and your task is to structure it with HTML tags, however use them only as if they are inside the body tag. Moreover you should propose prompts for generating images and where to insert them. Write the image prompts in the alt attribute, add captions and center the images. The image captions should match the article's language."
                 }
             ]
         },
