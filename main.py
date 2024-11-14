@@ -1,13 +1,19 @@
 from openai import OpenAI
 from bs4 import BeautifulSoup
 
+key_file = "key.txt"
+input_file = "Zadanie dla JJunior AI Developera - tresc artykulu.txt"
+article_file = "artykul.html"
+template_file = "szablon.html"
+output_file = "podglad.html"
+
 # Read API key value
-with open("key.txt", "r", encoding="utf-8") as file:
+with open(key_file, "r", encoding="utf-8") as file:
     api_key = file.readline()
 
 client = OpenAI(api_key=api_key)
 
-file_input = open("Zadanie dla JJunior AI Developera - tresc artykulu.txt", "r")
+file_input = open(input_file, "r")
 
 # Using OpenAI API to send a prompt
 completion = client.chat.completions.create(
@@ -46,16 +52,16 @@ for img in article_soup.find_all("img"):
     new_src_value = response.data[0].url
     img["src"] = new_src_value
 
-with open("artykul.html", "w", encoding="utf-8") as file:
+with open(article_file, "w", encoding="utf-8") as file:
     file.write(article_soup.prettify())
 
 # Template and body merging
-with open("szablon.html", "r", encoding="utf-8") as file:
+with open(template_file, "r", encoding="utf-8") as file:
     template_soup = BeautifulSoup(file.read(), "html.parser")
 
 template_soup.body.replace_with(article_soup)
 
-with open("podglad.html", "w", encoding="utf-8") as file:
+with open(output_file, "w", encoding="utf-8") as file:
     file.write(template_soup.prettify())
 
 client.close()
