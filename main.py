@@ -9,7 +9,7 @@ client = OpenAI(api_key=api_key)
 
 file_input = open("Zadanie dla JJunior AI Developera - tresc artykulu.txt", "r")
 
-# Using API to send prompt
+# Using OpenAI API to send a prompt
 completion = client.chat.completions.create(
     model="gpt-4o",
     messages=[
@@ -18,7 +18,7 @@ completion = client.chat.completions.create(
             "content": [
                 {
                     "type": "text",
-                    "text": "You will be provided with an article and your task is to structurize it with HTML tags, however use them only as if they are inside the body tag. Moreover you should propose where is it worth to insert images and also write prompts for generating these images in the alt attribute and image caption."
+                    "text": "You will be provided with an article and your task is to structurize it with HTML tags, however use them only as if they are inside the body tag. Moreover you should propose prompts for generating images and where to insert them. Write the image prompts in the alt attribute, add captions and center the images. The image captions should match the article's language."
                 }
             ]
         },
