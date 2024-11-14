@@ -1,11 +1,14 @@
 from openai import OpenAI
 from bs4 import BeautifulSoup
 
+# Change these accordingly to your own
 key_file = "key.txt"
 input_file = "Zadanie dla JJunior AI Developera - tresc artykulu.txt"
 article_file = "artykul.html"
 template_file = "szablon.html"
 output_file = "podglad.html"
+
+
 
 # Read API key value
 with open(key_file, "r", encoding="utf-8") as file:
