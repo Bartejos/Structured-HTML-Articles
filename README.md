@@ -44,4 +44,5 @@ To run the program, you'll need the following:
 
 ## How to launch
 
-To launch the program you need to either **have the .txt and .html files** in the same directory as the Python script or **change the path** of the files using the global variables. Also make sure to change the filenames to match your own preferences.
+To launch the program you need to either **have the .txt and .html files** in the same directory as the Python script or **change the path** of the files using the global variables. Also make sure to change the filenames to match your own preferences. To launch the program simply launch `main.py`. <br>
+*Note: The script takes some time because of AI image generation.*
