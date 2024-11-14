@@ -2,15 +2,14 @@ from openai import OpenAI
 from bs4 import BeautifulSoup
 
 # Read API key value
-keyFile = open("key.txt", "r")
-api_key = keyFile.readline()
-keyFile.close()
+with open("key.txt", "r", encoding="utf-8") as file:
+    api_key = file.readline()
 
 client = OpenAI(api_key=api_key)
 
-file_r = open("Zadanie dla JJunior AI Developera - tresc artykulu.txt", "r")
-file_w = open("artykul.html", "w")
+file_input = open("Zadanie dla JJunior AI Developera - tresc artykulu.txt", "r")
 
+# Using API to send prompt
 completion = client.chat.completions.create(
     model="gpt-4o",
     messages=[
@@ -28,26 +27,36 @@ completion = client.chat.completions.create(
             "content": [
                 {
                     "type": "text",
-                    "text": file_r.read()
+                    "text": file_input.read()
                 }
             ]
         }
     ]
 )
 
-soup = BeautifulSoup(completion.choices[0].message.content, "html.parser")
+# Generating images based on prompts received
+article_soup = BeautifulSoup(completion.choices[0].message.content, "html.parser")
 
-for img in soup.find_all("img"):
+for img in article_soup.find_all("img"):
     alt_text = img.get("alt")
     response = client.images.generate(
         prompt=alt_text,
-        size="1024x1024"
+        size="256x256"
     )
     new_src_value = response.data[0].url
     img["src"] = new_src_value
 
-file_w.write(soup.prettify())
+with open("artykul.html", "w", encoding="utf-8") as file:
+    file.write(article_soup.prettify())
+
+# Template and body merging
+with open("szablon.html", "r", encoding="utf-8") as file:
+    template_soup = BeautifulSoup(file.read(), "html.parser")
+
+template_soup.body.replace_with(article_soup)
+
+with open("podglad.html", "w", encoding="utf-8") as file:
+    file.write(template_soup.prettify())
 
 client.close()
-file_r.close()
-file_w.close()
+file_input.close()
